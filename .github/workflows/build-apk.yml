@@ -31,7 +31,23 @@ jobs:
         run: |
           if [ -n "$KEYSTORE_B64" ]; then
             echo "$KEYSTORE_B64" | base64 --decode > app/release.keystore
-            echo "keystore written to app/release.keystore"
+            echo "keystore size: $(stat -c%s app/release.keystore)"
+            echo "keystore sha256: $(sha256sum app/release.keystore | cut -d' ' -f1)"
+            sha256sum app/release.keystore | cut -d' ' -f1 > expected_shasum.txt
+          else
+            echo "KEYSTORE_B64 empty: proceeding with debug signing"
+          fi
+
+      - name: Verify keystore with keytool
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        run: |
+          if [ -f app/release.keystore ]; then
+            keytool -list -keystore app/release.keystore -storepass "$KEYSTORE_PASSWORD" -alias "$KEY_ALIAS" -v 2>&1 | sed -n '1,12p'
+            echo "keytool exit: ${PIPESTATUS[0]}"
+          else
+            echo "no keystore file present"
           fi
 
       - name: Build release APK and AAB

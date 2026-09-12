@@ -30,7 +30,8 @@ jobs:
           KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
         run: |
           if [ -n "$KEYSTORE_B64" ]; then
-            echo "$KEYSTORE_B64" | base64 --decode > release.keystore
+            echo "$KEYSTORE_B64" | base64 --decode > app/release.keystore
+            echo "keystore written to app/release.keystore"
           fi
 
       - name: Build release APK and AAB

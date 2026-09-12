@@ -25,6 +25,22 @@ jobs:
         with:
           gradle-version: '8.9'
 
+      - name: Prepare release keystore
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ]; then
+            echo "$KEYSTORE_B64" | base64 --decode > release.keystore
+          fi
+
+      - name: Build release APK and AAB
+        run: gradle assembleRelease bundleRelease --no-daemon
+        env:
+          KEYSTORE_B64: ${{ secrets.KEYSTORE_B64 }}
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+
       - name: Build debug APK
         run: gradle assembleDebug --no-daemon
 
@@ -33,15 +49,20 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: gastroconnect-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: gastroconnect-release
+          path: |
+            app/build/outputs/apk/release/app-release.apk
+            app/build/outputs/bundle/release/app-release.aab
+            app/build/outputs/apk/debug/app-debug.apk
 
-      - name: Create release with APK
+      - name: Create release with signed APK and AAB
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          cp app/build/outputs/apk/debug/app-debug.apk "gastroconnect-$TAG.apk"
-          gh release create "$TAG" "gastroconnect-$TAG.apk" \
+          cp app/build/outputs/apk/release/app-release.apk "gastroconnect-$TAG.apk"
+          cp app/build/outputs/bundle/release/app-release.aab "gastroconnect-$TAG.aab"
+          gh release create "$TAG" "gastroconnect-$TAG.apk" "gastroconnect-$TAG.aab" \
             --repo "$GITHUB_REPOSITORY" \
             --title "GastroConnect $TAG" \
-            --notes "GastroConnect Android app (WebView for https://gastroconnect.ru/). Install: enable unknown sources, open the APK."
+            --notes "GastroConnect Android app (WebView for https://gastroconnect.ru/).
+- v1.0.2 (release-signed): app-release.apk and app-release.aab for store publishing (RuStore)."

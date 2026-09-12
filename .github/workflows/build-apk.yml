@@ -61,8 +61,4 @@ jobs:
         run: |
           cp app/build/outputs/apk/release/app-release.apk "gastroconnect-$TAG.apk"
           cp app/build/outputs/bundle/release/app-release.aab "gastroconnect-$TAG.aab"
-          gh release create "$TAG" "gastroconnect-$TAG.apk" "gastroconnect-$TAG.aab" \
-            --repo "$GITHUB_REPOSITORY" \
-            --title "GastroConnect $TAG" \
-            --notes "GastroConnect Android app (WebView for https://gastroconnect.ru/).
-- v1.0.2 (release-signed): app-release.apk and app-release.aab for store publishing (RuStore)."
+          gh release create "$TAG" "gastroconnect-$TAG.apk" "gastroconnect-$TAG.aab" --repo "$GITHUB_REPOSITORY" --title "GastroConnect $TAG" --notes "GastroConnect Android app (WebView). v1.0.2 release-signed: apk and aab for RuStore."

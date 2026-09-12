@@ -44,6 +44,4 @@ jobs:
           gh release create "$TAG" "gastroconnect-$TAG.apk" \
             --repo "$GITHUB_REPOSITORY" \
             --title "GastroConnect $TAG" \
-            --notes "Android-приложение GastroConnect (WebView-оболочка https://gastroconnect.ru/).
-
-Установка: скачать APK, разрешить установку из неизвестных источников."
+            --notes "GastroConnect Android app (WebView for https://gastroconnect.ru/). Install: enable unknown sources, open the APK."

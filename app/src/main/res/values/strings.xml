@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GastroConnect</string>
+    <string name="no_file_picker">Не найдено приложение для выбора файла</string>
+    <string name="no_app_for_link">Не найдено приложение, которое откроет эту ссылку</string>
 </resources>

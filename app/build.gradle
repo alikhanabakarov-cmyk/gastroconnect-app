@@ -6,14 +6,14 @@ def keystoreB64 = System.getenv('KEYSTORE_B64')
 
 android {
     namespace 'ru.gastroconnect.app'
-    compileSdk 34
+    compileSdk 35
 
     defaultConfig {
         applicationId 'ru.gastroconnect.app'
         minSdk 26
-        targetSdk 34
-        versionCode 3
-        versionName '1.0.2'
+        targetSdk 35
+        versionCode 4
+        versionName '1.1.0'
     }
 
     signingConfigs {

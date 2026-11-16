@@ -62,7 +62,7 @@ jobs:
         run: gradle assembleDebug --no-daemon
 
       - name: Prepare tag
-        run: echo "TAG=v0.1.0-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
+        run: echo "TAG=v1.1.0-$(date +%Y%m%d-%H%M)" >> $GITHUB_ENV
 
       - uses: actions/upload-artifact@v4
         with:
@@ -78,4 +78,4 @@ jobs:
         run: |
           cp app/build/outputs/apk/release/app-release.apk "gastroconnect-$TAG.apk"
           cp app/build/outputs/bundle/release/app-release.aab "gastroconnect-$TAG.aab"
-          gh release create "$TAG" "gastroconnect-$TAG.apk" "gastroconnect-$TAG.aab" --repo "$GITHUB_REPOSITORY" --title "GastroConnect $TAG" --notes "GastroConnect Android app (WebView). v1.0.2 release-signed: apk and aab for RuStore."
+          gh release create "$TAG" "gastroconnect-$TAG.apk" "gastroconnect-$TAG.aab" --repo "$GITHUB_REPOSITORY" --title "GastroConnect $TAG" --notes "GastroConnect Android app (WebView). v1.1.0 release-signed: apk and aab for RuStore."

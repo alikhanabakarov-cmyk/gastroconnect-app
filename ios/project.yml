@@ -1,0 +1,52 @@
+name: GastroConnect
+options:
+  bundleIdPrefix: ru.gastroconnect
+  createIntermediateGroups: true
+  deploymentTarget:
+    iOS: "15.0"
+  groupSortPosition: top
+  xcodeVersion: "15.4"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "1"
+    ENABLE_USER_SCRIPT_SANDBOXING: YES
+    SWIFT_TREAT_WARNINGS_AS_ERRORS: NO
+
+targets:
+  GastroConnect:
+    type: application
+    platform: iOS
+    deploymentTarget: "15.0"
+    sources:
+      - path: GastroConnect
+        excludes:
+          - "PrivacyInfo.xcprivacy"
+      - path: GastroConnect/PrivacyInfo.xcprivacy
+        buildPhase: resources
+    settings:
+      base:
+        PRODUCT_NAME: GastroConnect
+        PRODUCT_BUNDLE_IDENTIFIER: ru.gastroconnect.app
+        GENERATE_INFOPLIST_FILE: NO
+        INFOPLIST_FILE: GastroConnect/Info.plist
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME: AccentColor
+        TARGETED_DEVICE_FAMILY: "1"
+        SUPPORTS_MACCATALYST: NO
+        SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD: NO
+        ENABLE_BITCODE: NO
+
+schemes:
+  GastroConnect:
+    build:
+      targets:
+        GastroConnect: all
+    run:
+      config: Debug
+    archive:
+      config: Release
+    test:
+      config: Debug

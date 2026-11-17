@@ -3,6 +3,11 @@ name: build-apk
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - "ios/**"
+      - ".github/workflows/build-ios.yml"
+      - "store/**"
+      - "README.md"
   workflow_dispatch:
 
 permissions:

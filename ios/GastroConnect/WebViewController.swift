@@ -282,6 +282,10 @@ extension WebViewController: WKNavigationDelegate {
 
 extension WebViewController: WKUIDelegate {
 
+    // WebKit gained a public file-input API only in iOS 18.4, so the hook is
+    // gated on the same version. The site has no file inputs today; keeping the
+    // method means uploads start working on newer systems without a new build.
+    @available(iOS 18.4, *)
     func webView(
         _ webView: WKWebView,
         runOpenPanelWith parameters: WKOpenPanelParameters,
